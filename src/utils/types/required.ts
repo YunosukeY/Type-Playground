@@ -1,6 +1,6 @@
 type RequiredIfKeyForNonNullableT<T, K> = K extends keyof T ? { [P in K]: NonNullable<T[K]> } : T;
 type RequiredIfKeyForNullableT<T, K> = K extends keyof NonNullable<T>
-  ? { [P in K]: NonNullable<NonNullable<T>[K]> } | undefined
+  ? { [P in K]: NonNullable<NonNullable<T>[K]> }
   : T;
 /**
  * KがTのkeyならKを必須にする
