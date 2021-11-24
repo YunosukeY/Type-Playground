@@ -1,5 +1,5 @@
 import { Paths } from './path';
-import { assertSame } from './typeAssertion';
+import { Equal, Expect } from './typeAssertion';
 
 it('Path', () => {
   type Test = {
@@ -10,5 +10,5 @@ it('Path', () => {
   type Actual = Paths<Test>;
   type Expected = 'a' | 'a.b' | 'a.b.c' | 'd' | 'd.e' | 'f';
 
-  assertSame<Expected, Actual>(true);
+  type Assert = Expect<Equal<Expected, Actual>>;
 });
