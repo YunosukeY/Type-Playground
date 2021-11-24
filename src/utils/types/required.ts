@@ -1,4 +1,5 @@
 import { Paths } from './path';
+import { LastInUnion } from './union';
 
 type RequiredIfKeyForNonNullableT<T, K> = K extends keyof T ? { [P in K]: NonNullable<T[K]> } : T;
 type RequiredIfKeyForNullableT<T, K> = K extends keyof NonNullable<T>
@@ -32,4 +33,8 @@ export type _RequirePath<T, Path extends string> = Path extends `${infer Lead}.$
 /**
  * Pathで指定されたTのプロパティを必須にする
  */
-export type RequirePath<T, Path extends Paths<T>> = _RequirePath<T, Path>;
+export type RequirePath<T, Path extends Paths<T>, Last = LastInUnion<Path>> = [Path] extends [never]
+  ? T
+  : Last extends string
+  ? _RequirePath<T, Last> & RequirePath<T, Exclude<Path, Last>>
+  : never;
